@@ -9,11 +9,43 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/styleMemory.css" type="text/css" media="screen" />
+        <script src="js/script.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
-        <div id="container">
-            <div class="Karten"></div>
+    <body>   
+         <div id="container">
+             <form><table border="1">
+                <thead>
+                    <tr>
+                        <th colspan="4">Geben Sie die Breit und Höhe für das Spielfeld an.<br>
+                            Max Anzahl Spielfelder ist 64!</th>
+                    </tr>
+                </thead>
+                <tbody id="Feld1">
+                    <tr>
+                        <td>Breite: </td>
+                        <td><input type="number" name="" value="" /></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>Höhe: </td>
+                        <td><input type="number" name="" value="" /></td>
+                        <td>Anzahl Felder:</td>
+                        <td><input type="text" name="" value="" readonly="readonly" /></td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+<!--            <div id="Karten1" class="Karten1"></div>
+            <div class="Karten2"></div>
+            <div class="Karten3"></div>
+            <div class="Karten4"></div>
+            <div class="Karten5"></div>
+            <div class="Karten6"></div>
+            <div class="Karten7"></div>
+            <div class="Karten8"></div>
+            <div class="Karten9"></div>-->
         </div>
     </body>
 </html>
