@@ -24,4 +24,6 @@ function test() {
     }
 }
 
-
+function masse(){
+    
+}
