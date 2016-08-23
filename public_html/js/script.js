@@ -1,34 +1,10 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-var pfad = "bilder/";
-
-var image = [
-    "Bild1.jpg",
-    "Bild2.jpg",
-    "Bild3.jpg"
-];
-
-//var pfadImage = pfad + image;
-
-var i = 0;
-
-function test() {
-    for (i = 0; i < image.length; i++) {
-        var pfadImage = pfad + image[i];
-        document.getElementById("Karten" + i).src = pfadImage;
-
-    }
+var i;
+var karten = [];
+for (i = 0; i < 32; i++){
+    karten[i] = ["bilder/Bild" + i + ".jpg", "bilder/Bild" + i + ".jpg"];
 }
 
-function ueberpruefeGroesse(feld){
-    if (feld.value < 3){
-        alert("Bitte geben sie einen Wert größer als 2 ein!");
-    }
-}
+
 function berechne(){
     var feld_a = document.getElementById("breite").value;
     var feld_b = document.getElementById("hoehe").value;
@@ -48,7 +24,20 @@ function modulo(){
 }
 
 function spielBedingung(obj){
-    ueberpruefeGroesse(obj);
+//    ueberpruefeGroesse(obj);
     modulo();
     berechne();
+}
+
+
+
+function spielkarten(breite, hoehe, menge){
+    var spielKartenNach = [];
+    var spielKartenVor = karten;
+    spielKartenVor.sort(function(a, b){return 0.5 - Math.random()});
+    for(i = 0; i < (menge/2); i++){
+      spielKartenNach[i] = spielKartenVor[i];
+    }
+    spielKartenNach.sort(function(a, b){return 0.5 - Math.random()});
+    document.getElementById("test").innerHTML = spielKartenNach;
 }
