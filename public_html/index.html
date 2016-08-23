@@ -19,15 +19,15 @@
                 <tbody id="Feld1">
                     <tr>
                         <td>Breite: </td>
-                        <td><input type="number" name="" value="" /></td>
+                        <td><input id="breite" onfocus="" onkeyup="ueberpruefeGroesse(this)" onchange="ueberpruefeGroesse(this)" required="" type="number" name="" value="" /></td>
                         <td></td>
-                        <td></td>
+                        <td><button style="width: 100%" type="button" onclick="">Start</button></td>
                     </tr>
                     <tr>
                         <td>Höhe: </td>
-                        <td><input type="number" name="" value="" /></td>
+                        <td><input id="hoehe" required="" onkeyup="spielBedingung(this)" onchange="spielBedingung(this)"  type="number" name="" value="" /></td>
                         <td>Anzahl Felder:</td>
-                        <td><input type="text" name="" value="" readonly="readonly" /></td>
+                        <td><input id="anzahl" type="text" name="" value="" readonly="readonly" /></td>
                     </tr>
                 </tbody>
             </table>
