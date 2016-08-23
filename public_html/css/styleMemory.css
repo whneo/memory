@@ -1,8 +1,3 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/
 /* 
     Created on : 22.08.2016, 10:39:34
     Author     : fonzi
@@ -22,8 +17,7 @@ body {
     font-family: Arial, SunSans-Regular, Sans-Serif;
     color:#564b47;
 }
-#container {
-    
+#container {    
     max-width: 1200px;
     min-width:960px;
     margin:10px  auto;
@@ -38,9 +32,9 @@ body {
 }
 
 table {
-    border-collapse: collapse; /* nimmt die leeren Felder zwischen den Tabellen */
-    /*background-color: red;*/
-    /*background: transparent;*/
+    border-collapse: collapse;  /*nimmt die leeren Felder zwischen den Tabellen */
+/*    background-color: red;
+    background: transparent;*/
     border: none;
 }
 
@@ -71,11 +65,11 @@ form {
     background-color: antiquewhite;
 }
 
-.Karten1 {
-    background-image: url("../bilder/Bild1.jpg");
+.Karten {
+    background-image: url("../bilder/BildHintergrund.jpg");
     background-size: 80px 80px;
     background-repeat: no-repeat;
-    position: absolute;
+    position: relative;
     top: 10px;
     left: 10px;
     width: 80px;

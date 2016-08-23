@@ -1,43 +1,61 @@
 var i;
-var karten = [];
-for (i = 0; i < 32; i++){
-    karten[i] = ["bilder/Bild" + i + ".jpg", "bilder/Bild" + i + ".jpg"];
+var spielfeldBreite;
+var spielfeldHoehe;
+var spielfeldFlaeche;
+var spielkartenGesamt = [];
+
+function berechneSpielfeldFlaeche() {
+    spielfeldBreite = document.getElementById("spielfeldBreite").value;
+    spielfeldHoehe = document.getElementById("spielfeldHoehe").value;
+    spielfeldFlaeche = spielfeldBreite * spielfeldHoehe;
+    document.getElementById("spielfeldFlaeche").value = spielfeldFlaeche;
 }
 
-
-function berechne(){
-    var feld_a = document.getElementById("breite").value;
-    var feld_b = document.getElementById("hoehe").value;
-    var ergebnis = feld_a * feld_b;
-    if (ergebnis > 64){
-        alert("Es dürfen Max. 64 Spielfelder erzeugt werden!")
+function spielkonfigurationLaden() {
+    berechneSpielfeldFlaeche();
+    if ((spielfeldBreite % 2 === 1 && spielfeldHoehe % 2 === 1) && spielfeldFlaeche > 64) {
+        eingabeLoeschen();
+        alert("Breite und Höhe dürfen nicht beide ungerade sein! \n \n Es dürfen max. 64 Spielfelder erzeugt werden!");
+    } else if (spielfeldBreite % 2 === 1 && spielfeldHoehe % 2 === 1) {
+        eingabeLoeschen();
+        alert("Breite und Höhe dürfen nicht beide ungerade sein!");
+    } else if (spielfeldFlaeche > 64) {
+        eingabeLoeschen();
+        alert("Es dürfen max. 64 Spielfelder erzeugt werden!");
+    } else {
+        for (i = 0; i < 32; i++) {
+//            spielkartenGesamt[i] = ["bilder/Bild" + i + ".jpg", "bilder/Bild" + i + ".jpg"];
+            spielkartenGesamt[i] = "bilder/Bild" + i + ".jpg";
+        }
+        document.getElementById("startButton").onclick = spielkartenErstellen;
+        document.getElementById("spielfeldBreite").oninput = eingabeLoeschen;
+        document.getElementById("spielfeldHoehe").oninput = eingabeLoeschen;
     }
-    document.getElementById("anzahl").value = ergebnis;
 }
 
-function modulo(){
-    var feld_a = document.getElementById("breite").value;
-    var feld_b = document.getElementById("hoehe").value;
-    if (feld_a % 2 == 1 && feld_b % 2 == 1){
-        alert("Breite und Höhe dürfen nicht beide ungerade Werte haben!");
+function spielkartenErstellen() {
+    var spielkartenRunde = [];
+    spielkartenGesamt.sort(function () {
+        return 0.5 - Math.random();
+    });
+    for (i = 0; i < (spielfeldFlaeche / 2); i++) {
+        spielkartenRunde[i] = spielkartenGesamt[i];
+        spielkartenRunde[spielfeldFlaeche / 2 + i] = spielkartenGesamt[i];
     }
+    spielkartenRunde.sort(function () {
+        return 0.5 - Math.random();
+    });
+    document.getElementById("test").innerHTML = spielkartenRunde;
+    alert("Breite: " + spielfeldBreite + "\n Höhe: " + spielfeldHoehe + "\n Spielfelder: " + spielfeldFlaeche);
 }
 
-function spielBedingung(obj){
-//    ueberpruefeGroesse(obj);
-    modulo();
-    berechne();
+function eingabeLoeschen() {
+    spielfeldBreite = 0;
+    spielfeldHoehe = 0;
+    spielfeldFlaeche = 0;
+    document.getElementById("startButton").onclick = "";
 }
 
+function spielfeldErstellen() {
 
-
-function spielkarten(breite, hoehe, menge){
-    var spielKartenNach = [];
-    var spielKartenVor = karten;
-    spielKartenVor.sort(function(a, b){return 0.5 - Math.random()});
-    for(i = 0; i < (menge/2); i++){
-      spielKartenNach[i] = spielKartenVor[i];
-    }
-    spielKartenNach.sort(function(a, b){return 0.5 - Math.random()});
-    document.getElementById("test").innerHTML = spielKartenNach;
 }
