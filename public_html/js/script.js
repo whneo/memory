@@ -24,4 +24,31 @@ function test() {
     }
 }
 
+function ueberpruefeGroesse(feld){
+    if (feld.value < 3){
+        alert("Bitte geben sie einen Wert größer als 2 ein!");
+    }
+}
+function berechne(){
+    var feld_a = document.getElementById("breite").value;
+    var feld_b = document.getElementById("hoehe").value;
+    var ergebnis = feld_a * feld_b;
+    if (ergebnis > 64){
+        alert("Es dürfen Max. 64 Spielfelder erzeugt werden!")
+    }
+    document.getElementById("anzahl").value = ergebnis;
+}
 
+function modulo(){
+    var feld_a = document.getElementById("breite").value;
+    var feld_b = document.getElementById("hoehe").value;
+    if (feld_a % 2 == 1 && feld_b % 2 == 1){
+        alert("Breite und Höhe dürfen nicht beide ungerade Werte haben!");
+    }
+}
+
+function spielBedingung(obj){
+    ueberpruefeGroesse(obj);
+    modulo();
+    berechne();
+}
