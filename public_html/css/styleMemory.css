@@ -1,8 +1,3 @@
-/* 
-    Created on : 22.08.2016, 10:39:34
-    Author     : fonzi
-*/
-
 * {
     margin: 0;
     padding: 0;
@@ -17,24 +12,15 @@ body {
     font-family: Arial, SunSans-Regular, Sans-Serif;
     color:#564b47;
 }
-#container {    
-    max-width: 1200px;
-    min-width:960px;
-    margin:10px  auto;
-    background-color: aquamarine;
-    position: relative;
-/*  width: 730px;
-    height: 820px;
-    border: 2px;
-    border-style: solid;
-    border-color: coral;
-    border-radius: 30px;      */
-}
 
 table {
-    border-collapse: collapse;  /*nimmt die leeren Felder zwischen den Tabellen */
-/*    background-color: red;
-    background: transparent;*/
+    border-collapse: collapse; /* nimmt die leeren Felder zwischen den Tabellen */
+    /*background-color: red;*/
+    /*background: transparent;*/    
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: auto;
     border: none;
 }
 
@@ -57,25 +43,47 @@ td {
     background-color: #E5E7BF;
 }
 
-/*input {
-    text-align: right;
-}*/
+.breite {
+    max-width: 80px;
+   
+}
+
+#spielfeldFlaeche {
+     text-align: center;
+}
 
 form {
     background-color: antiquewhite;
 }
 
-.Karten {
-    background-image: url("../bilder/BildHintergrund.jpg");
-    background-size: 80px 80px;
-    background-repeat: no-repeat;
-    position: relative;
-    top: 10px;
-    left: 10px;
+.Karten0 {
     width: 80px;
     height: 80px;
     border: 1px;
-    border-style: solid;
-    border-color: cadetblue;
-    border-radius: 20px;
+    float:left;
+    margin:10px;
+    padding:10px;
+
  }
+
+ div#container{
+        position: relative;
+	background-color: aquamarine;
+        border: 1px;
+        border-style: solid;
+        border-color: coral;
+        border-radius: 30px; 
+	margin:20px auto;        
+}
+
+div#container > div{
+        position: relative;
+        /*background: url(../bilder/BildHintergrund.jpg) no-repeat;*/
+	background-size: 80px 80px;
+	border-style: solid;
+        border-color: cadetblue;
+        border-radius: 20px;
+	float:left;
+	margin:10px;
+	cursor:pointer;
+}

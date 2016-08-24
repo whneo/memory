@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Projekt Memory Rainer & Marco</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" href="css/styleMemory.css" type="text/css" media="screen" />
         <script src="js/script.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
-        <div id="container">
+    <body>   
+        <div id="spielfeld">
             <form>
                 <table border="1">
                     <thead>
@@ -20,48 +20,19 @@
                     <tbody id="Feld1">
                         <tr>
                             <td>Breite: </td>
-                            <td><input id="spielfeldBreite"  min="3" onchange="berechneSpielfeldFlaeche()" required="" type="number"  /></td>
-                            <td><button style="width: 100%" type="button" onclick="spielkonfigurationLaden()">Erstelle Spielfeld</button></td>
+                            <td><input class="breite" id="spielfeldBreite"  min="3" onchange="berechneSpielfeldFlaeche()" required="" type="number"  /></td>
+                            <td><button style="width: 140px" type="button" onclick="spielkonfigurationLaden()">Erstelle Spielfeld</button></td>
                             <td><button id="startButton" style="width: 100%" type="button">Start</button></td>
                         </tr>
                         <tr>
                             <td>Höhe: </td>
-                            <td><input id="spielfeldHoehe" min="3" onchange="berechneSpielfeldFlaeche()" type="number" required="" /></td>
+                            <td><input class="breite" id="spielfeldHoehe" min="3" onchange="berechneSpielfeldFlaeche()" type="number" required="" /></td>
                             <td>Anzahl Felder:</td>
-                            <td><input id="spielfeldFlaeche" type="text" readonly="readonly" /></td>
+                            <td><input class="breite" id="spielfeldFlaeche" type="text" readonly="readonly" /></td>
                         </tr>
                     </tbody>
                 </table>
-            </form>
-            <p id="test">hier</p>
-            
-            <!--            <div id="Karten1" class="Karten1"></div>
-           <div class="Karten2"></div>
-           <div class="Karten3"></div>
-           <div class="Karten4"></div>
-           <div class="Karten5"></div>
-           <div class="Karten6"></div>
-           <div class="Karten7"></div>
-           <div class="Karten8"></div>
-           <div class="Karten9"></div>-->
-
-            <!--<body>        
-            <div id="container">
-                        <div class="Karten">
-                            <img id="bild1" onclick="test()" src="bilder/Memory Deckblatt.jpg" />
-                            <script>
-                                var karten = ["bilder/Bild1.jpg"];
-                                var i;
-                                function test() {
-                                    for (i = 0; i < karten.length; i++) {
-                                        document.getElementById('bild1').src = karten[i];
-                                    }
-                                }
-                            </script>
-                        </div>-->
-            </div>
-        <div id="Karte0" class="Karten"><img id="bild0" class="Karten" onclick="test()" src="bilder/Bild0.jpg" /></div>
-        <div id="Karte1" class="Karten"><img id="bild1" class="Karten" onclick="test()" src="bilder/Bild1.jpg" /></div>
-        <div id="Karte2" class="Karten"><img id="bild2" class="Karten" onclick="test()" src="bilder/Bild2.jpg" /></div>
+            </form>               
+        </div>
     </body>
 </html>
