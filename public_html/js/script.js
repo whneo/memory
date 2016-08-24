@@ -136,10 +136,10 @@ function pruefe() {
 function laufzeitCheck() {
     if (spielLaufzeit === 0) {
         alert("Sie haben das Spiel gewonnen");
-        window.setTimeout(restart, 1500);
+        window.setTimeout(neuesSpiel, 1500);
     }
 }
 
-function restart() {
+function neuesSpiel() {
     document.getElementById("spielfeld").innerHTML = '<form><table border="1"><thead><tr><th colspan="4">Geben Sie die Breit und Höhe für das Spielfeld an.<br>Max Anzahl Spielfelder ist 64!</th></tr></thead><tbody id="Feld1"><tr><td>Breite: </td><td><input class="breite" id="spielfeldBreite"  min="3" onchange="berechneSpielfeldFlaeche()" required="" type="number"  /></td><td><button style="width: 140px" type="button" onclick="spielkonfigurationLaden()">Erstelle Spielfeld</button></td><td><button id="startButton" style="width: 100%" type="button">Start</button></td></tr><tr><td>Höhe: </td><td><input class="breite" id="spielfeldHoehe" min="3" onchange="berechneSpielfeldFlaeche()" type="number" required="" /></td><td>Anzahl Felder:</td><td><input class="breite" id="spielfeldFlaeche" type="text" readonly="readonly" /></td></tr></tbody></table></form>';
 }
