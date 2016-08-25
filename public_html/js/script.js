@@ -1,8 +1,6 @@
 var i;
 var j;
 var computerPunkte;
-var computerZug = false;
-var spielerZug = false;
 var spielerPunkte;
 var spielerName;
 var gewaehlteKarten = 0;
@@ -14,10 +12,11 @@ var kartenId2;
 var spielfeldBreite;
 var spielfeldHoehe;
 var spielfeldFlaeche;
+var hirnVolumen;
+var hirnInhalt;
 var computerHirn = [];
 var spielkartenRunde = [];
 var spielkartenGesamt = [];
-
 for (i = 0; i < 32; i++) {
     spielkartenGesamt[i] = "./bilder/Bild" + i + ".jpg";
 }
@@ -74,12 +73,13 @@ function spielfeldErstellen() {
     spielkartenErstellen();
     var begin = '<div id="kartenFeld" style="width: ' + (spielfeldBreite * 100 + 2) + 'px; height: ' + (spielfeldHoehe * 100) + 'px">';
     var end = '</div>';
-    var displaySpieler = '<div class="displayRahmen"><div class="display"><p id="spieler">' + spielerName + ':</p><input class="breite" id="spielerPunkte" type="text" readonly="" /></div>'
-    var displayComputer = '<div class="display">Computer: <input class="breite" id="computerPunkte" type="text" readonly="" /></div>'
+    var displaySpieler = '<div class="displayRahmen"><div class="display"><p id="spieler">' + spielerName + ':</p><input class="breite" id="spielerPunkte" type="text" readonly="" /></div>';
+    var displayComputer = '<div class="display">Computer: <input class="breite" id="computerPunkte" type="text" readonly="" /></div>';
     var output = '';
     for (i = 0; i < spielkartenRunde.length; i++) {
         output += '<div id="karte' + i + '" class="karten" style="background: url(' + spielkartenRunde[i] + '); background-size: 80px 80px"></div>';
     }
+    hirnVolumen = (spielkartenRunde.length / 5).toFixed(0);
     speicherErsteKartenImHirn();
     document.getElementById('spielFlaeche').innerHTML = begin + output + end + displaySpieler + displayComputer + end;
     spielLaufzeit = spielkartenRunde.length / 2;
@@ -90,11 +90,8 @@ function alleSpielkartenVerdecken() {
     for (i = 0; i < spielfeldFlaeche; i++) {
         document.getElementById('karte' + i).style.background = "url('./bilder/BildHintergrund.jpg')";
         document.getElementById('karte' + i).style.backgroundSize = "80px 80px";
-        document.getElementById('karte' + i).onclick = function () {
-            karteWaehlen(this);
-        };
     }
-    spielerZug = true;
+    spielerIstDran();
 }
 
 function falscheSpielkartenVerdecken() {
@@ -116,11 +113,13 @@ function karteWaehlen(obj) {
         kartenId1 = id;
         karte1 = spielkartenRunde[newId];
         gewaehlteKarten += 1;
+        tauscheKarteImHirn(kartenId1, karte1);
         document.getElementById(obj.id).style.background = "url('" + spielkartenRunde[newId] + "')";
         document.getElementById(obj.id).style.backgroundSize = "80px 80px";
     } else if (gewaehlteKarten === 1) {
         kartenId2 = id;
         karte2 = spielkartenRunde[newId];
+        tauscheKarteImHirn(kartenId2, karte2);
         document.getElementById(obj.id).style.background = "url('" + spielkartenRunde[newId] + "')";
         document.getElementById(obj.id).style.backgroundSize = "80px 80px";
         pruefe();
@@ -129,13 +128,12 @@ function karteWaehlen(obj) {
 
 function pruefe() {
     if (karte1 === karte2) {
-        loescheRichtigeKartenAusHirn(karte1, karte2);
+        loescheRichtigeKartenAusHirn();
         gewaehlteKarten = 0;
         spielLaufzeit--;
         laufzeitCheck();
     } else {
         gewaehlteKarten = 0;
-//        tauscheKartenImHirn();
         for (i = 0; i < spielfeldFlaeche; i++) {
             document.getElementById('karte' + i).onclick = "";
         }
@@ -155,77 +153,53 @@ function neuesSpiel() {
 }
 
 function speicherErsteKartenImHirn() {
-    for (i = 0; i < (spielkartenRunde.length / 5).toFixed(0); i++) {
+    for (i = 0; i < hirnVolumen; i++) {
         var random = Math.floor(Math.random() * spielkartenRunde.length);
         computerHirn[i] = ["karte" + random, spielkartenRunde[random]];
     }
-//    alert("erste karten \n" + computerHirn);
+    hirnInhalt = hirnVolumen;
 }
 
-function loescheRichtigeKartenAusHirn(karte1, karte2) {
+function loescheRichtigeKartenAusHirn() {
     for (j = 0; j < 2; j++) {
-        for (i = 0; i < computerHirn.length; i++) {
+        for (i = 0; i < hirnVolumen; i++) {
             if (computerHirn[i][1] === karte1 || computerHirn[i][1] === karte2) {
                 computerHirn = computerHirn.slice(0, i).concat(computerHirn.slice(i + 1));
+                hirnInhalt--;
+                computerHirn[computerHirn.length] = ["", ""];
             }
         }
     }
-//    alert("match gelöscht \n" + computerHirn);
 }
 
-//function tauscheKartenImHirn() {
-//    var id1 = -1;
-//    var id2 = -1;
-//    var tauschen1 = true;
-//    var tauschen2 = true;
-//    var neuesHirn = [];
-//    for (i = 0; i < computerHirn.length; i++) {
-//        if (computerHirn[i][0] === kartenId1 && computerHirn[i][1] === karte1) {
-//            tauschen1 = false;
-//            id1 = i;
-//        } else if (computerHirn[i][0] === kartenId2 && computerHirn[i][1] === karte2) {
-//            tauschen2 = false;
-//            id2 = i;
-//        }
-//    }
-//    alert(id1 + " " + id2 + "\n" + computerHirn);
-//    if (id1 !== -1) {
-//        computerHirn = computerHirn.slice(0, id1).concat(computerHirn.slice(id1 + 1));
-//    }
-//    alert("nach " + id1 + "\n" + computerHirn);
-//    if (id2 !== -1) {
-//        if (computerHirn.length === 1) {
-//            computerHirn[0][0] = kartenId1;
-//            computerHirn[0][1] = karte1;
-//            computerHirn[1][0] = kartenId2;
-//            computerHirn[1][1] = karte2;
-//        } else {
-//            computerHirn = computerHirn.slice(0, id2).concat(computerHirn.slice(id2 + 1));
-//        }
-//    }
-//    alert("nach " + id2 + "\n" + computerHirn);
-//
-//    if (tauschen1 === true && tauschen2 === true) {
-//        var x = computerHirn.length;
-//        computerHirn[x - 1][0] = kartenId1;
-//        computerHirn[x - 1][1] = karte1;
-//        computerHirn[x - 2][0] = kartenId2;
-//        computerHirn[x - 2][1] = karte2;
-//        alert(tauschen1 + " " + tauschen2 + "\n" + computerHirn);
-//    } else if (tauschen1 === true && tauschen2 === false) {
-//        var x = computerHirn.length;
-//        computerHirn[x - 1][0] = kartenId1;
-//        computerHirn[x - 1][1] = karte1;
-//        computerHirn[x + 1][0] = kartenId2;
-//        computerHirn[x + 1][1] = karte2;
-//        alert(tauschen1 + " " + tauschen2 + "\n" + computerHirn);
-//    } else if (tauschen1 === false && tauschen2 === true) {
-//        var x = computerHirn.length;
-//        computerHirn[x + 1][0] = kartenId1;
-//        computerHirn[x + 1][1] = karte1;
-//        computerHirn[x - 1][0] = kartenId2;
-//        computerHirn[x - 1][1] = karte2;
-//        alert(tauschen1 + " " + tauschen2 + "\n" + computerHirn);
-//    }
-//    alert("neue karten gemerkt \n" + computerHirn);
-//}
+function tauscheKarteImHirn(kartenId, karte) {
+    var austausch = true;
+    for (i = 0; i < hirnVolumen; i++) {
+        if (computerHirn[i][0] === kartenId && computerHirn[i][1] === karte) {
+            austausch = false;
+        }
+    }
+    if (austausch === true) {
+        if (hirnInhalt < hirnVolumen) {
+            computerHirn[hirnInhalt][0] = kartenId;
+            computerHirn[hirnInhalt][1] = karte;
+            hirnInhalt++;
+        } else {
+            computerHirn[hirnInhalt - 1][0] = kartenId;
+            computerHirn[hirnInhalt - 1][1] = karte;
+        }
+    }
+    if (hirnInhalt === hirnVolumen) {
+        computerHirn.sort(function () {
+            return 0.5 - Math.random();
+        });
+    }
+}
+
+function spielerIstDran() {
+    for (i = 0; i < spielfeldFlaeche; i++) {
+        document.getElementById('karte' + i).onclick = function () {
+            karteWaehlen(this);
+        };
+    }
+}
