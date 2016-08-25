@@ -1,0 +1,115 @@
+form {
+    background-color: antiquewhite;
+}
+
+#spielfeldFlaeche {
+     text-align: center;
+}
+
+.breite {
+    max-width: 80px;
+   
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: antiquewhite;
+    font-size: 0.95em;
+    font-family: Arial, SunSans-Regular, Sans-Serif;
+    color:#564b47;
+}
+
+table {
+    border-collapse: collapse; /* nimmt die leeren Felder zwischen den Tabellen */
+    /*background-color: red;*/
+    /*background: transparent;*/    
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: auto;
+    border: none;
+}
+
+th {
+    border: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #D9AB60;
+    color: #fff;
+}
+.tdStart {
+    border: none;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    padding-right: 10px;
+    text-align: center;
+    background-color: #E5E7BF;
+}
+
+div {
+    height: auto;
+    margin: 0 auto;
+    padding: 0;
+    width: auto;
+    align-content: center;
+/*    float: left;*/
+}
+
+#spielFlaeche{
+    border: 1px;
+    border-style: solid;
+    border-color: cornsilk;
+    border-radius: 40px; 
+    background-color: beige;
+    float: left;
+    padding: 10px;
+ 
+}
+
+#kartenFeld{
+    background-color: aquamarine;
+    border: 1px;
+    border-style: solid;
+    border-color: coral;
+    border-radius: 30px; 
+    margin:auto; 
+    width: auto;
+    float: left;
+}
+
+.karten{
+    width: 80px;
+    height: 80px;
+    border: 1px;
+    float:left;
+    margin:10px;
+    padding:10px;
+    border-style: solid;
+    border-color: cadetblue;
+    border-radius: 20px;
+    cursor:pointer;
+    float: left;
+}
+
+.displayRahmen {
+    margin-left: 30px;
+    padding: 10px;
+    margin-right: 10px;
+    float: left;
+    
+}
+
+.display{
+    width: auto;
+    height: auto;
+}
