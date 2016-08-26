@@ -15,6 +15,7 @@ var spielfeldFlaeche;
 var hirnVolumen;
 var hirnInhalt;
 var computerHirn = [];
+var entfernteSpielkarten = [];
 var spielkartenRunde = [];
 var spielkartenGesamt = [];
 for (i = 0; i < 32; i++) {
@@ -71,10 +72,10 @@ function eingabeLoeschen() {
 
 function spielfeldErstellen() {
     spielkartenErstellen();
-    var begin = '<div id="kartenFeld" style="width: ' + (spielfeldBreite * 100 + 2) + 'px; height: ' + (spielfeldHoehe * 100) + 'px">';
+    var begin = '<div id="spielFlaecheIn"><div id="kartenFeld" style="width: ' + (spielfeldBreite * 100 + 2) + 'px; height: ' + (spielfeldHoehe * 100) + 'px">';
     var end = '</div>';
-    var displaySpieler = '<div class="displayRahmen"><div class="display"><p id="spieler">' + spielerName + ':</p><input class="breite" id="spielerPunkte" type="text" readonly="" /></div>';
-    var displayComputer = '<div class="display">Computer: <input class="breite" id="computerPunkte" type="text" readonly="" /></div>';
+    var displaySpieler = '<div class="displayRahmen"><div class="display"><p id="spieler">' + spielerName + ':<input class="breite" id="spielerPunkte" type="text" readonly="" /></p></div>';
+    var displayComputer = '<div class="display">Computer: <input class="breite" id="computerPunkte" type="text" readonly="" /></div></div>';
     var output = '';
     for (i = 0; i < spielkartenRunde.length; i++) {
         output += '<div id="karte' + i + '" class="karten" style="background: url(' + spielkartenRunde[i] + '); background-size: 80px 80px"></div>';
@@ -99,44 +100,46 @@ function falscheSpielkartenVerdecken() {
     document.getElementById(kartenId1).style.backgroundSize = "80px 80px";
     document.getElementById(kartenId2).style.background = "url('./bilder/BildHintergrund.jpg')";
     document.getElementById(kartenId2).style.backgroundSize = "80px 80px";
-    for (i = 0; i < spielfeldFlaeche; i++) {
-        document.getElementById('karte' + i).onclick = function () {
-            karteWaehlen(this);
-        };
-    }
+    kartenId1 = -1;
+    kartenId2 = -2;
+    onclickStart();
 }
 
 function karteWaehlen(obj) {
     var id = obj.id;
     var newId = id.slice(5);
-    if (gewaehlteKarten === 0) {
-        kartenId1 = id;
-        karte1 = spielkartenRunde[newId];
-        gewaehlteKarten += 1;
-        tauscheKarteImHirn(kartenId1, karte1);
-        document.getElementById(obj.id).style.background = "url('" + spielkartenRunde[newId] + "')";
-        document.getElementById(obj.id).style.backgroundSize = "80px 80px";
-    } else if (gewaehlteKarten === 1) {
-        kartenId2 = id;
-        karte2 = spielkartenRunde[newId];
-        tauscheKarteImHirn(kartenId2, karte2);
-        document.getElementById(obj.id).style.background = "url('" + spielkartenRunde[newId] + "')";
-        document.getElementById(obj.id).style.backgroundSize = "80px 80px";
-        pruefe();
+    if (kartenId1 !== id) {
+        if (gewaehlteKarten === 0) {
+            kartenId1 = id;
+            karte1 = spielkartenRunde[newId];
+            gewaehlteKarten += 1;
+            tauscheKarteImHirn(kartenId1, karte1);
+            document.getElementById(obj.id).style.background = "url('" + spielkartenRunde[newId] + "')";
+            document.getElementById(obj.id).style.backgroundSize = "80px 80px";
+        } else if (gewaehlteKarten === 1) {
+            for (i = 0; i < spielfeldFlaeche; i++) {
+                document.getElementById('karte' + i).onclick = "";
+            }
+            kartenId2 = id;
+            karte2 = spielkartenRunde[newId];
+            tauscheKarteImHirn(kartenId2, karte2);
+            document.getElementById(obj.id).style.background = "url('" + spielkartenRunde[newId] + "')";
+            document.getElementById(obj.id).style.backgroundSize = "80px 80px";
+            window.setTimeout(pruefe, 100);
+        }
     }
 }
 
 function pruefe() {
     if (karte1 === karte2) {
+        entfernteSpielkarten.push(kartenId1, kartenId2);
         loescheRichtigeKartenAusHirn();
         gewaehlteKarten = 0;
         spielLaufzeit--;
         laufzeitCheck();
+        window.setTimeout(kartenEntfernen, 250);
     } else {
         gewaehlteKarten = 0;
-        for (i = 0; i < spielfeldFlaeche; i++) {
-            document.getElementById('karte' + i).onclick = "";
-        }
         window.setTimeout(falscheSpielkartenVerdecken, 1500);
     }
 }
@@ -149,7 +152,7 @@ function laufzeitCheck() {
 }
 
 function neuesSpiel() {
-    document.getElementById("spielFlaeche").innerHTML = '<form><table border="1"><thead><tr><th colspan="4">Geben Sie die Breit und Höhe für das Spielfeld an.<br>Max Anzahl Spielfelder ist 64!</th></tr></thead><tbody id="Feld1"><tr><td class="tdStart">Breite: </td><td class="tdStart"><input class="breite" id="spielfeldBreite"  min="3" onchange="berechneSpielfeldFlaeche()" required="" type="number"  /></td><td class="tdStart"> </td><td class="tdStart"><button style="width: 140px" type="button" onclick="spielkonfigurationLaden()">Erstelle Spielfeld</button></td></tr><tr><td class="tdStart">Höhe:</td><td class="tdStart"><input class="breite" id="spielfeldHoehe" min="3" onchange="berechneSpielfeldFlaeche()" type="number" required="" /></td><td class="tdStart"></td><td class="tdStart"><button id="startButton" style="width: 100%" type="button">Start</button></td></tr><tr><td class="tdStart">Spieler: </td><td class="tdStart"><input class="breite" id="spielerName" onchange="berechneSpielfeldFlaeche()" type="text" required="" /></td><td class="tdStart">Anzahl Felder:</td><td class="tdStart"><input id="spielfeldFlaeche" type="text" readonly="readonly" /></td></tr></tbody></table></form>';
+    document.getElementById("spielFlaeche").innerHTML = '<form><table border="1"><thead><tr><th colspan="4">Geben Sie die Breit und Höhe für das Spielfeld an.<br>Max Anzahl Spielfelder ist 64!</th></tr></thead><tbody id="Feld1"><tr><td class="tdStart">Breite: </td><td class="tdStart"><input class="breite" id="spielfeldBreite"  min="3" onchange="berechneSpielfeldFlaeche()" required="" type="number"  /></td><td class="tdStart"> </td><td class="tdStart"><button style="width: 100%" type="button" onclick="spielkonfigurationLaden()">Erstelle Spielfeld</button></td></tr><tr><td class="tdStart">Höhe:</td><td class="tdStart"><input class="breite" id="spielfeldHoehe" min="3" onchange="berechneSpielfeldFlaeche()" type="number" required="" /></td><td class="tdStart"></td><td class="tdStart"><button id="startButton" style="width: 100%" type="button">Start</button></td></tr><tr><td class="tdStart">Spieler: </td><td class="tdStart"><input class="breite" id="spielerName" onchange="berechneSpielfeldFlaeche()" type="text" required="" /></td><td class="tdStart">Anzahl Felder:</td><td class="tdStart"><input id="spielfeldFlaeche" type="text" readonly="readonly" /></td></tr></tbody></table></form>';
 }
 
 function speicherErsteKartenImHirn() {
@@ -202,4 +205,36 @@ function spielerIstDran() {
             karteWaehlen(this);
         };
     }
+}
+
+function onclickStart() {
+    alert(entfernteSpielkarten);
+    var check = true;
+    for (i = 0; i < spielfeldFlaeche; i++) {
+        for (j = 0; j < entfernteSpielkarten.length; j++) {
+            if ("karte" + i === entfernteSpielkarten[j]) {
+                check = false;
+                break;
+            }
+        }
+        if (check === true) {
+            document.getElementById('karte' + i).onclick = function () {
+                karteWaehlen(this);
+            };
+        } else {
+            document.getElementById('karte' + i).onclick = "";
+            document.getElementById('karte' + i).style.cursor = "default";
+        }
+        check = true;
+    }
+}
+
+function kartenEntfernen() {
+    document.getElementById(kartenId1).style.background = "url('./bilder/BildTransparent.gif')";
+    document.getElementById(kartenId1).style.border = "none";
+    document.getElementById(kartenId2).style.background = "url('./bilder/BildTransparent.gif')";
+    document.getElementById(kartenId2).style.border = "none";
+    kartenId1 = -1;
+    kartenId2 = -2;
+    onclickStart();
 }
